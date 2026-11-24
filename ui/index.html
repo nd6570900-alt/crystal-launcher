@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+<title>Crystal Launcher</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3.2 3 3.2 15 0 18"/><path d="M12 3c-3.2 3-3.2 15 0 18"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="4.5" rx="1.2"/><path d="M5 8.5V19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5"/><path d="M10 12.5h4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-library" viewBox="0 0 24 24"><path d="M4 4v16M9 4v16"/><rect x="13" y="4" width="3.5" height="16" rx="1"/><path d="m18.6 5.6 3 .8-3.6 13.6-3-.8"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-brush" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.8 0-.9-.6-1.3-.6-2.2 0-1 .8-1.5 1.7-1.5H17a4 4 0 0 0 4-4C21 6.9 17 3 12 3z"/><circle cx="7.6" cy="11" r="1"/><circle cx="10" cy="7.2" r="1"/><circle cx="14.4" cy="7.2" r="1"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 9h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3v3M12 3v3"/></symbol>
+  <symbol id="i-disk" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-modrinth" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M7.5 14.5c2 .8 4.600.8 7-.6M8 9.5l8.400 1.600"/></symbol>
+  <symbol id="i-anvil" viewBox="0 0 24 24"><path d="M3 6h10c0 3 2 4 4 4h4c-1 3-3 4-6 4v2h2v3H8v-3h2v-2c-3 0-5-2-7-8z"/></symbol>
+  <symbol id="i-fabric" viewBox="0 0 24 24"><path d="M5 4h9v4H9v3h5v4H9v5H5z"/></symbol>
+  <symbol id="i-quilt" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.500"/><rect x="13" y="4" width="7" height="7" rx="1.500"/><rect x="4" y="13" width="7" height="7" rx="1.500"/><rect x="13" y="13" width="7" height="7" rx="1.500"/></symbol>
+  <symbol id="i-neo" viewBox="0 0 24 24"><path d="M4 5l5 3h6l5-3-1 8-4 6h-6l-4-6z"/></symbol>
+  <symbol id="i-pack" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8l9 5z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.500"/><circle cx="9" cy="10" r="1.800"/><path d="m21 16-5-5-9 9"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.500M12 19.500V22M2 12h2.500M19.500 12H22M4.900 4.900l1.800 1.800M17.300 17.300l1.800 1.800M4.900 19.100l1.800-1.800M17.300 6.700l1.800-1.800"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.1 2.1 0 0 0-3-3L5 17z"/><path d="m14.5 7.5 3 3"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-12M9 7V4h6v3"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-gem" viewBox="0 0 24 24"><path d="M12 2.5 20.5 9 12 21.5 3.5 9z" fill="currentColor" stroke="none"/><path d="M3.5 9h17M12 2.5 8.6 9 12 21.5 15.4 9z" stroke="rgba(0,0,0,.28)" stroke-width="1.2" fill="none"/></symbol>
+</svg>
+
+<!-- titlebar: lives above everything (modals included), so the window buttons are always reachable -->
+<header class="titlebar" id="titlebar">
+  <div class="tb-brand">
+    <svg class="tb-logo"><use href="#i-gem"/></svg>
+    <span class="tb-name">Crystal Launcher</span>
+    <span class="tb-beta">Beta</span>
+    <span class="tb-ver">2.3.0</span>
+  </div>
+  <div class="tb-drag"></div>
+  <div class="wc">
+    <button type="button" class="wc-btn" id="btnMin" title="Minimize" aria-label="Minimize">
+      <svg viewBox="0 0 12 12"><path d="M2 6h8"/></svg>
+    </button>
+    <button type="button" class="wc-btn" id="btnMax" title="Maximize" aria-label="Maximize">
+      <svg viewBox="0 0 12 12" id="icoMax"><rect x="2.2" y="2.2" width="7.6" height="7.6" rx="1.4"/></svg>
+    </button>
+    <button type="button" class="wc-btn close" id="btnClose" title="Close" aria-label="Close">
+      <svg viewBox="0 0 12 12"><path d="m2.5 2.5 7 7M9.5 2.5l-7 7"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- sidebar -->
+  <aside class="side">
+    <button type="button" class="side-logo" id="btnLogo" title="Home"><svg><use href="#i-gem"/></svg></button>
+    <nav class="side-nav">
+      <button type="button" class="nav on" data-view="home" title="Home"><svg class="i"><use href="#i-grid"/></svg></button>
+      <button type="button" class="nav" data-view="instances" title="Instances"><svg class="i"><use href="#i-cube"/></svg></button>
+      <button type="button" class="nav" data-view="discover" title="Discover modpacks"><svg class="i"><use href="#i-globe"/></svg></button>
+      <button type="button" class="nav" data-view="servers" title="Servers"><svg class="i"><use href="#i-server"/></svg></button>
+      <button type="button" class="nav" data-view="console" title="Console"><svg class="i"><use href="#i-archive"/></svg></button>
+      <button type="button" class="nav" data-view="changelog" id="navChangelog" title="What's new"><svg class="i"><use href="#i-spark"/></svg><i class="nav-dot" id="navDot" hidden></i></button>
+    </nav>
+    <div class="side-sep"></div>
+    <button type="button" class="nav add" id="btnAddInstance" title="New instance"><svg class="i"><use href="#i-plus"/></svg></button>
+    <div class="side-inst" id="sideInst"></div>
+    <div class="side-fill"></div>
+    <button type="button" class="nav" id="btnSettings" title="Settings"><svg class="i"><use href="#i-gear"/></svg></button>
+  </aside>
+
+  <main class="stage" id="stage">
+
+    <!-- HOME -->
+    <section class="view on" id="view-home">
+      <div class="home">
+        <div class="home-main">
+          <div class="greet">
+            <div>
+              <h1 id="greetTitle">Time to punch some trees, Player</h1>
+              <p>Your next adventure is waiting.</p>
+            </div>
+            <button type="button" class="browse" id="btnBrowse">
+              <svg class="i"><use href="#i-library"/></svg>
+              <span><b>Browse Library</b><small>Explore your instances</small></span>
+            </button>
+          </div>
+
+          <div class="sec-row">
+            <h2 class="sec">Explore Content Hub</h2>
+            <button type="button" class="shuffle" id="btnShuffle" title="Show different modpacks"><svg class="i"><use href="#i-shuffle"/></svg>Shuffle</button>
+          </div>
+          <div class="tchips" id="homeChips"></div>
+          <div class="hub" id="hubHome"></div>
+
+          <div class="lower">
+            <div class="col-inst">
+              <h2 class="sec">Instances</h2>
+              <div class="inst-list" id="instList"></div>
+            </div>
+            <div class="col-play">
+              <h2 class="sec">Your Playtime</h2>
+              <div class="panel play-panel">
+                <div class="play-top">
+                  <div class="play-hours"><b id="weekHours">0.0h</b><span><svg class="i"><use href="#i-clock"/></svg> HOURS PLAYED</span></div>
+                </div>
+                <div class="bars" id="bars"></div>
+                <div class="tiles">
+                  <div class="tile"><svg class="i"><use href="#i-grid"/></svg><b id="tileInst">0</b><small>Instances</small></div>
+                  <div class="tile"><svg class="i"><use href="#i-pulse"/></svg><b id="tileLast">0m</b><small>Last session</small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="home-side">
+          <div class="panel news">
+            <div class="panel-h"><svg class="i"><use href="#i-archive"/></svg><span>News</span></div>
+            <div id="newsList" class="news-list"></div>
+          </div>
+
+          <div class="panel quick">
+            <div class="quick-top">
+              <div class="quick-icon" id="quickIcon"></div>
+              <div class="quick-text">
+                <div class="quick-name" id="quickName">No instance</div>
+                <div class="quick-sub" id="quickSub">Create one to start playing</div>
+              </div>
+            </div>
+            <button type="button" class="play" id="play"><svg class="i"><use href="#i-play"/></svg><span id="playLabel">Play</span></button>
+            <div class="bar"><div id="barFill"></div></div>
+            <div class="status" id="status">Ready</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- INSTANCES -->
+    <section class="view" id="view-instances">
+      <div class="page">
+        <div class="page-h">
+          <div><h1>Instances</h1><p id="instCount">0 instances</p></div>
+          <div class="row">
+            <button type="button" class="btn" id="btnImportPack"><svg class="i"><use href="#i-archive"/></svg>Import .mrpack</button>
+            <button type="button" class="btn primary" id="btnNewInstance"><svg class="i"><use href="#i-plus"/></svg>New instance</button>
+          </div>
+        </div>
+        <div class="inst-grid" id="instGrid"></div>
+      </div>
+    </section>
+
+    <!-- MANAGE -->
+    <section class="view" id="view-manage">
+      <div class="page">
+        <div class="page-h">
+          <div class="row">
+            <button type="button" class="ibtn" id="mgBack" title="Back to instances"><svg class="i"><use href="#i-back"/></svg></button>
+            <div><h1 id="mgTitle">Manage</h1><p id="mgSub"></p></div>
+          </div>
+          <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="mgSearch" placeholder="Filter…" autocomplete="off" spellcheck="false" /></label>
+        </div>
+        <div class="tchips" id="mgChips"></div>
+        <div class="row mg-bar">
+          <button type="button" class="btn" id="mgCheck">Check for updates</button>
+          <button type="button" class="btn primary" id="mgUpdateAll" hidden>Update all</button>
+          <button type="button" class="btn" id="mgFolder"><svg class="i"><use href="#i-folder"/></svg>Open folder</button>
+          <button type="button" class="btn" id="mgMore"><svg class="i"><use href="#i-plus"/></svg>Add more</button>
+          <span class="hint" id="mgStatus"></span>
+        </div>
+        <div class="mg-list" id="mgList"></div>
+      </div>
+    </section>
+
+    <!-- DISCOVER -->
+    <section class="view" id="view-discover">
+      <div class="disc">
+        <div class="disc-main">
+          <div class="page-h">
+            <div><h1>Discover</h1><p>Modpacks, mods, shaders, resource packs and data packs from Modrinth</p></div>
+          </div>
+          <label class="search wide"><svg class="i"><use href="#i-search"/></svg><input id="hubSearch" placeholder="Search Modrinth…" autocomplete="off" spellcheck="false" /></label>
+          <div class="hub-grid" id="hubGrid"></div>
+        </div>
+        <aside class="filters">
+          <div class="f-head"><span><svg class="i"><use href="#i-filter"/></svg>Filters</span><button type="button" class="f-clear" id="fClear">× Clear</button></div>
+          <div class="f-scroll">
+            <label class="switch small f-match" id="matchWrap" hidden><input id="matchInst" type="checkbox" /><i></i><span id="matchLabel">Match my instance</span></label>
+            <div class="f-label">Source</div>
+            <div class="seg"><button type="button" class="on" id="btnModrinth"><svg class="i"><use href="#i-modrinth"/></svg>Modrinth</button><button type="button" id="btnCurse"><svg class="i"><use href="#i-anvil"/></svg>CurseForge</button></div>
+            <div class="f-label">Content type</div>
+            <div class="fpills" id="fTypes"></div>
+            <div class="f-label">Game version</div>
+            <div class="dd" id="fVer">
+              <button type="button" class="dd-btn" id="fVerBtn"><span id="fVerText">Any Version</span><svg class="i"><use href="#i-chev"/></svg></button>
+              <div class="dd-panel" id="fVerPanel" hidden>
+                <input id="fVerSearch" class="field" placeholder="Search versions…" spellcheck="false" />
+                <div class="dd-list" id="fVerList"></div>
+              </div>
+            </div>
+            <div id="fLoadersWrap">
+              <div class="f-label">Mod loaders</div>
+              <div class="fpills" id="fLoaders"></div>
+            </div>
+            <div class="f-label">Categories</div>
+            <div class="fpills" id="fCats"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SERVERS -->
+    <section class="view" id="view-servers">
+      <div class="page">
+        <div class="page-h">
+          <div><h1>Servers</h1><p id="srvCount">0 servers</p></div>
+          <div class="row">
+            <button type="button" class="btn" id="btnSrvRefresh">Refresh</button>
+            <button type="button" class="btn primary" id="btnSrvAdd"><svg class="i"><use href="#i-plus"/></svg>Add server</button>
+          </div>
+        </div>
+        <p class="hint" id="srvHint"></p>
+        <div class="jlist" id="srvList"></div>
+      </div>
+    </section>
+
+    <!-- CONSOLE -->
+    <section class="view" id="view-console">
+      <div class="page console-page">
+        <div class="page-h">
+          <div><h1>Console</h1><p>Game and launcher output</p></div>
+          <button type="button" class="btn" id="btnClear">Clear</button>
+        </div>
+        <pre id="log" class="log"></pre>
+      </div>
+    </section>
+
+    <!-- CHANGELOG -->
+    <section class="view" id="view-changelog">
+      <div class="page">
+        <div class="page-h"><div><h1>What's new</h1><p>Changelog for Crystal Launcher <span id="clVer"></span></p></div></div>
+        <div class="cl-list" id="clList"></div>
+      </div>
+    </section>
+
+
+  </main>
+</div>
+
+<!-- modals (start below the titlebar) -->
+<div class="splash" id="splash">
+  <div class="stars" aria-hidden="true"></div>
+  <i class="shoot" aria-hidden="true"></i>
+  <div class="sp-row"><img class="sp-logo" src="icon.png" alt="" draggable="false" /><div class="sp-word" id="spWord"><span id="spText">Crystal Launcher</span></div></div>
+</div>
+<div class="errbar" id="errbar" hidden></div>
+<div class="overlay" id="overlay">
+
+  <div class="modal settings-modal" id="m-settings">
+    <aside class="set-nav">
+      <h2>Settings</h2>
+      <button type="button" class="sn on" data-sec="general"><svg class="i"><use href="#i-gear"/></svg>General</button>
+      <button type="button" class="sn" data-sec="appearance"><svg class="i"><use href="#i-brush"/></svg>Appearance</button>
+      <button type="button" class="sn" data-sec="java"><svg class="i"><use href="#i-coffee"/></svg>Java Manager</button>
+      <button type="button" class="sn" data-sec="storage"><svg class="i"><use href="#i-disk"/></svg>Storage</button>
+      <button type="button" class="sn" data-sec="defaults"><svg class="i"><use href="#i-sliders"/></svg>Default Options</button>
+      <button type="button" class="sn" data-sec="about"><svg class="i"><use href="#i-info"/></svg>About</button>
+      <div class="set-ver"><span id="setVer">Crystal Launcher v2.3.0</span><span id="setOs"></span></div>
+    </aside>
+    <section class="set-body">
+      <div class="set-head">
+        <div class="set-head-ico"><svg class="i" id="setHeadIco"><use href="#i-gear"/></svg></div>
+        <div class="set-head-txt"><b id="setHeadT">General</b><span id="setHeadS">General application settings and preferences</span></div>
+        <button type="button" class="x-btn" data-close aria-label="Close">×</button>
+      </div>
+      <div class="set-scroll">
+
+        <div class="set-sec on" data-sec="general">
+          <div class="sgroup">Account</div>
+          <div class="srow">
+            <div class="avatar" id="avatar">P</div>
+            <div class="stxt"><b>Offline player name</b><span>Used as your in-game name. Letters, numbers and _ work best.</span></div>
+            <input id="username" class="field sfield" maxlength="16" placeholder="Username" spellcheck="false" />
+          </div>
+          <div class="srow">
+            <div class="stxt"><b>Account</b><span>Go back to the sign-in screen to change how you play.</span></div>
+            <button type="button" class="btn" id="btnSwitch">Switch account</button>
+          </div>
+          <div class="sgroup">Language</div>
+          <div class="srow">
+            <div class="stxt"><b>Language</b><span>Choose your preferred language</span></div>
+            <span class="hint">English</span>
+          </div>
+          <div class="sgroup">Application</div>
+          <div class="srow">
+            <div class="stxt"><b>Auto Launch</b><span>Start application automatically on system boot</span></div>
+            <label class="switch"><input id="autoLaunch" type="checkbox" /><i></i></label>
+          </div>
+          <div class="srow">
+            <div class="stxt"><b>Minimize on Launch</b><span>Hide the launcher in the taskbar while a game instance starts</span></div>
+            <label class="switch"><input id="minLaunch" type="checkbox" /><i></i></label>
+          </div>
+          <div class="srow">
+            <div class="stxt"><b>Disable Playtime Tracking</b><span>Don't track how long you play instances</span></div>
+            <label class="switch"><input id="noPlaytime" type="checkbox" /><i></i></label>
+          </div>
+          <div class="sgroup">Performance</div>
+          <div class="srow">
+            <div class="stxt"><b>Performance Mode</b><span>Strip tints, animations and background effects for low-end machines</span></div>
+            <label class="switch"><input id="perfMode" type="checkbox" /><i></i></label>
+          </div>
+          <div class="srow">
+            <div class="stxt"><b>Hardware Acceleration</b><span>Enable GPU acceleration for better performance (requires restart)</span></div>
+            <label class="switch"><input id="hwAccel" type="checkbox" checked /><i></i></label>
+          </div>
+        </div>
+
+        <div class="set-sec" data-sec="appearance">
+          <div class="sgroup">Display Mode</div>
+          <div class="dmodes" id="dModes"></div>
+          <div class="sgroup">Accent Color</div>
+          <div class="swatches" id="accentSwatches"></div>
+        </div>
+
+        <div class="set-sec" data-sec="java">
+          <div class="jlist" id="javaMgr"><div class="hint">Loading…</div></div>
+          <p class="note">Note: Java runtimes are automatically downloaded when needed. You only need to manually install if you want to pre-download or manage specific versions.</p>
+          <div class="sgroup">Custom Java (advanced)</div>
+          <div class="srow col">
+            <div class="row nowrap">
+              <input id="javaPath" class="field" placeholder="Auto-detect" spellcheck="false" />
+              <button type="button" class="btn" id="btnJava">Browse</button>
+              <button type="button" class="btn" id="btnDetect">Detect</button>
+            </div>
+            <div id="javaFound" class="hint">Leave empty and a matching Java is found or downloaded automatically.</div>
+          </div>
+          <div class="jlist" id="javaList"></div>
+        </div>
+
+        <div class="set-sec" data-sec="storage">
+          <div class="srow col">
+            <div class="row between"><b class="fg">Location</b><span class="hint" id="stFree"></span></div>
+            <div class="row">
+              <input id="stPath" class="field" readonly />
+              <button type="button" class="btn" id="btnFolder"><svg class="i"><use href="#i-folder"/></svg>Open</button>
+            </div>
+            <div class="stbar" id="stBar"></div>
+            <div class="stleg" id="stLeg"></div>
+          </div>
+          <div class="sgroup">Shared files</div>
+          <div class="jlist" id="stItems"><div class="hint">Calculating…</div></div>
+          <div class="sgroup">Instances</div>
+          <div class="jlist" id="stInst"></div>
+        </div>
+
+        <div class="set-sec" data-sec="defaults">
+          <div class="sgroup">Memory</div>
+          <div class="srow col">
+            <div class="row between"><span class="fg">Allocated memory</span><span id="ramVal" class="accent">3 GB</span></div>
+            <input id="ram" type="range" min="1024" max="4096" step="512" value="3072" />
+            <div class="row between tiny"><span>1 GB</span><span id="ramMaxLabel"></span></div>
+            <div class="hint" id="ramHint">Capped to about 75% of your RAM so Windows keeps enough for itself.</div>
+          </div>
+          <div class="sgroup">Game window</div>
+          <div class="srow">
+            <div class="stxt"><b>Window size</b><span>Applied when "Use custom size" is on</span></div>
+            <div class="row nowrap">
+              <input id="w" class="field sm" type="number" min="320" value="1280" />
+              <span class="x">×</span>
+              <input id="h" class="field sm" type="number" min="240" value="720" />
+            </div>
+            <label class="switch"><input id="customRes" type="checkbox" /><i></i></label>
+          </div>
+          <div class="sgroup">JVM arguments</div>
+          <div class="srow col">
+            <input id="jvmArgs" class="field" placeholder="Optional, e.g. -XX:+UseZGC" spellcheck="false" maxlength="600" />
+            <div class="hint">Extra Java options for every instance. Leave empty if unsure.</div>
+          </div>
+        </div>
+
+        <div class="set-sec" data-sec="about">
+          <div class="srow">
+            <div class="stxt"><b>What's new</b><span id="aboutVer">Crystal Launcher v2.3.0</span></div>
+            <button type="button" class="btn" id="btnChanges"><svg class="i"><use href="#i-spark"/></svg>What's new</button>
+          </div>
+          <div class="srow">
+            <div class="stxt"><b>Data folder</b><span>AppData › CrystalLauncher</span></div>
+            <button type="button" class="btn" id="btnFolder2"><svg class="i"><use href="#i-folder"/></svg>Open folder</button>
+          </div>
+          <p class="note">Crystal Launcher is an unofficial launcher and is not affiliated with Mojang or Microsoft. Content comes from Modrinth.</p>
+        </div>
+      </div>
+      <div class="set-foot"><button type="button" class="btn primary" data-close><svg class="i"><use href="#i-check"/></svg>Done</button></div>
+    </section>
+  </div>
+
+
+  <div class="modal" id="m-create">
+    <div class="modal-h"><h3>New instance</h3><button type="button" class="x-btn" data-close>×</button></div>
+    <label class="m-label">Name</label>
+    <input id="newName" class="field" placeholder="My Instance" maxlength="24" spellcheck="false" />
+    <label class="m-label">Mod loader</label>
+    <div class="chips" id="loaderChips">
+      <button type="button" class="chip on" data-value="vanilla">Vanilla</button>
+      <button type="button" class="chip" data-value="fabric">Fabric</button>
+      <button type="button" class="chip" data-value="quilt">Quilt</button>
+      <button type="button" class="chip" data-value="forge">Forge</button>
+      <button type="button" class="chip" data-value="neoforge">NeoForge</button>
+    </div>
+    <div class="row between m-label-row">
+      <label class="m-label">Version</label>
+      <label class="switch small"><input id="showSnaps" type="checkbox" /><i></i><span>Snapshots</span></label>
+    </div>
+    <input id="newSearch" class="field" placeholder="Search versions…" spellcheck="false" />
+    <div id="newVersionList" class="vlist"></div>
+    <div class="modal-f">
+      <button type="button" class="btn" data-close>Cancel</button>
+      <button type="button" class="btn primary" id="btnCreate">Create instance</button>
+    </div>
+  </div>
+
+  <div class="modal narrow" id="m-rename">
+    <div class="modal-h"><h3>Rename instance</h3><button type="button" class="x-btn" data-close>×</button></div>
+    <input id="renameInput" class="field" maxlength="24" spellcheck="false" />
+    <div class="modal-f">
+      <button type="button" class="btn" data-close>Cancel</button>
+      <button type="button" class="btn primary" id="btnConfirmRename">Save</button>
+    </div>
+  </div>
+
+  <div class="modal" id="m-install">
+    <div class="modal-h"><h3 id="instHead">Install modpack</h3><button type="button" class="x-btn" data-close id="installX">×</button></div>
+    <div class="inst-hero">
+      <div class="inst-hero-ico" id="instHeroIco"></div>
+      <div class="inst-hero-txt">
+        <div class="inst-hero-title" id="instTitle"></div>
+        <div class="inst-hero-by" id="instBy"></div>
+      </div>
+    </div>
+    <p class="m-text" id="instDesc"></p>
+    <div id="instTargetWrap" hidden>
+      <label class="m-label">Install into</label>
+      <div id="instTargets" class="vlist short"></div>
+      <div id="worldWrap" hidden>
+        <label class="m-label">World</label>
+        <div id="worldList" class="vlist short"></div>
+      </div>
+    </div>
+    <p class="hint" id="instNote">This creates a new instance and downloads the pack's mods into it.</p>
+    <div class="bar inst-bar" id="instBarWrap" hidden><div id="instBar"></div></div>
+    <div class="status" id="instStatus"></div>
+    <div class="jlist" id="instBlocked" hidden></div>
+    <div class="modal-f">
+      <button type="button" class="btn" id="instCancel">Cancel</button>
+      <button type="button" class="btn primary" id="btnInstall"><svg class="i"><use href="#i-download"/></svg><span id="btnInstallLabel">Install</span></button>
+    </div>
+  </div>
+
+  <div class="modal" id="m-crash">
+    <div class="modal-h"><h3 id="crashHead">Minecraft crashed</h3><button type="button" class="x-btn" data-close>×</button></div>
+    <p class="m-text" id="crashSub"></p>
+    <div class="diag-list" id="crashList"></div>
+    <div class="status" id="crashStatus"></div>
+    <div class="modal-f wrap">
+      <button type="button" class="btn" id="btnCrashReport" hidden><svg class="i"><use href="#i-folder"/></svg>Crash report</button>
+      <button type="button" class="btn" id="btnCrashConsole"><svg class="i"><use href="#i-archive"/></svg>View console</button>
+      <button type="button" class="btn" id="btnCrashUpload"><svg class="i"><use href="#i-ext"/></svg>Upload log</button>
+      <button type="button" class="btn primary" data-close>Close</button>
+    </div>
+    <p class="hint" id="crashHint">Uploading shares the log with mclo.gs so someone can help you. Your Windows user name is removed first.</p>
+  </div>
+
+  <div class="modal" id="m-server">
+    <div class="modal-h"><h3 id="srvTitle">Add server</h3><button type="button" class="x-btn" data-close>×</button></div>
+    <label class="m-label">Name</label>
+    <input id="srvName" class="field" maxlength="32" placeholder="My server" spellcheck="false" />
+    <label class="m-label">Server IP</label>
+    <input id="srvAddr" class="field" maxlength="120" placeholder="play.example.com or play.example.com:25565" spellcheck="false" />
+    <div class="modal-f"><button type="button" class="btn" data-close>Cancel</button><button type="button" class="btn primary" id="btnSrvSave">Save</button></div>
+  </div>
+
+  <div class="modal" id="m-isettings">
+    <div class="modal-h"><h3 id="isTitle">Instance settings</h3><button type="button" class="x-btn" data-close>×</button></div>
+    <p class="m-text">Leave a box empty to use the global setting from Settings.</p>
+    <label class="m-label">Memory (MB)</label>
+    <input id="isRam" class="field" type="number" min="512" max="65536" step="256" placeholder="Global" />
+    <label class="m-label">Java path</label>
+    <input id="isJava" class="field" placeholder="Global" spellcheck="false" />
+    <label class="m-label">Window size</label>
+    <div class="row">
+      <input id="isW" class="field sm" type="number" min="320" placeholder="Width" />
+      <span class="x">×</span>
+      <input id="isH" class="field sm" type="number" min="240" placeholder="Height" />
+    </div>
+    <label class="m-label">Extra JVM arguments</label>
+    <input id="isJvm" class="field" placeholder="Global" spellcheck="false" maxlength="600" />
+    <div class="status" id="isStatus"></div>
+    <div class="modal-f">
+      <button type="button" class="btn" data-close>Cancel</button>
+      <button type="button" class="btn primary" id="btnSaveIS">Save</button>
+    </div>
+  </div>
+
+  <div class="modal narrow" id="m-mgconfirm">
+    <div class="modal-h"><h3 id="mgcTitle">Are you sure?</h3><button type="button" class="x-btn" data-close>×</button></div>
+    <p class="m-text" id="mgcText"></p>
+    <div class="modal-f">
+      <button type="button" class="btn" data-close>Cancel</button>
+      <button type="button" class="btn danger" id="btnMgConfirm">Continue</button>
+    </div>
+  </div>
+
+  <div class="modal narrow" id="m-delete">
+    <div class="modal-h"><h3>Delete instance?</h3><button type="button" class="x-btn" data-close>×</button></div>
+    <p class="m-text" id="deleteText">This removes its saves, mods and worlds.</p>
+    <div class="modal-f">
+      <button type="button" class="btn" data-close>Cancel</button>
+      <button type="button" class="btn danger" id="btnConfirmDelete">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- first-run welcome / sign-in screen (sits under the titlebar so window buttons keep working) -->
+<div class="welcome" id="welcome" hidden>
+  <div class="stars" aria-hidden="true"></div>
+  <i class="shoot" aria-hidden="true"></i>
+  <div class="w-title" id="wTitle"></div>
+  <div class="w-card" id="wCard">
+
+    <div class="w-step on" id="w-main">
+      <img class="w-logo-img" src="icon.png" alt="" draggable="false" />
+      <h1>Welcome to Crystal Launcher</h1>
+      <p class="w-sub">Sign in to your account</p>
+      <button type="button" class="w-btn ms" id="btnMs">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 2h9.5v9.5H2zM12.5 2H22v9.5h-9.5zM2 12.5h9.5V22H2zM12.5 12.5H22V22h-9.5z"/></svg>
+        Continue with Microsoft
+      </button>
+      <div class="w-or"><span>or</span></div>
+      <button type="button" class="w-btn off" id="btnOffline">
+        <svg class="i"><use href="#i-user"/></svg>
+        Play Offline
+      </button>
+      <p class="w-note" id="wNote">Offline mode uses a name stored only on this PC. No account is needed.</p>
+      <button type="button" class="w-link" id="wChanges"><svg class="i"><use href="#i-spark"/></svg>What's new in v2.3.0</button>
+      <button type="button" class="w-link" id="wCancel" hidden>Cancel</button>
+    </div>
+
+    <div class="w-step" id="w-changes">
+      <h1>What's new</h1>
+      <p class="w-sub">Crystal Launcher changelog</p>
+      <div class="cl-list w-cl" id="wClList"></div>
+      <button type="button" class="w-btn off" id="wChangesBack">Back</button>
+    </div>
+
+    <div class="w-step" id="w-offline">
+      <img class="w-logo-img sm" src="icon.png" alt="" draggable="false" />
+      <button type="button" class="w-link w-back" id="wBack">‹ Back to methods</button>
+      <input id="wName" class="w-input" maxlength="16" placeholder="Enter your username" spellcheck="false" autocomplete="off" />
+      <button type="button" class="w-btn ms" id="wContinue">Log in <span aria-hidden="true">→</span></button>
+      <p class="w-note" id="wErr">3 to 16 characters: letters, numbers and _ only.</p>
+    </div>
+
+  </div>
+  <div class="w-foot">© 2026 Crystal Launcher<br>NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.</div>
+  <div class="w-ver">v2.3.0</div>
+</div>
+
+<div class="toast" id="toast" hidden>
+  <div class="toast-t" id="toastT"></div>
+  <div class="toast-s" id="toastS"></div>
+  <div class="bar" id="toastBarWrap"><div id="toastBar"></div></div>
+</div>
+
+<script src="renderer.js"></script>
+</body>
+</html>
